@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.OrderMapper">
+    <select id="select_kc" resultType="int">
+        SELECT
+            kc-#{sku_shl}
+            FROM t_mall_sku
+        WHERE Id=#{sku_id} for update
+        <!--防止重复读，加一个select的显示锁，行级锁-->
+    </select>
+
+
+    <insert id="insert_order" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        t_mall_order(shhr, zje, jdh, yh_id, yjsdshj, dzh_id, dzh_mch)
+        VALUES (#{shhr},#{zje},#{jdh},#{yh_id},#{yjsdshj},#{dzh_id},#{dzh_mch})
+    </insert>
+    <insert id="insert_order_info">
+        INSERT INTO
+        t_mall_order_info(dd_id, sku_id, flow_id, sku_mch, shp_tp, sku_jg, sku_shl, sku_kcdz, gwch_id)
+                VALUES (#{dd_id},#{sku_id},#{flow_id},#{sku_mch},#{shp_tp},#{sku_jg},#{sku_shl},#{sku_kcdz},#{gwch_id})
+    </insert>
+    <insert id="insert_flow" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        t_mall_flow(psfsh, psshj, psmsh, yh_id, dd_id, mqdd, mdd, ywy, lxfsh)
+        VALUES (#{psfsh},#{psshj},#{psmsh},#{yh_id},#{dd_id},#{mqdd},#{mdd},#{ywy},#{lxfsh})
+    </insert>
+
+
+    <update id="update_order">
+        UPDATE
+        t_mall_order
+        SET yjsdshj=#{yjsdshj},jdh=#{jdh}
+        where id=#{id}
+    </update>
+    <update id="update_flow">
+        UPDATE
+        t_mall_flow
+        SET psmsh=#{psmsh},psshj=#{psshj},ywy=#{ywy},lxfsh=#{lxfsh}
+        where id=#{id}
+    </update>
+    <update id="update_kc">
+        UPDATE
+            t_mall_sku
+            SET kc=kc-#{sku_shl},sku_xl=sku_xl+#{sku_shl}
+        where id=#{sku_id}
+    </update>
+</mapper>

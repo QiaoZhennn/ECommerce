@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.CartMapper">
+
+    <select id="get_list_cart_by_user_id" resultType="com.atguigu.bean.T_MALL_SHOPPINGCART">
+        SELECT *
+        FROM t_mall_shoppingcart
+        WHERE yh_id=#{id}
+    </select>
+
+    <insert id="add_cart">
+        INSERT INTO
+        t_mall_shoppingcart(sku_mch, sku_jg, tjshl, hj, yh_id, shp_id, chjshj, sku_id, shp_tp, shfxz, kcdz)
+        VALUES
+            (#{sku_mch},#{sku_jg},#{tjshl},#{hj},#{yh_id},#{shp_id},#{chjshj},#{sku_id},#{shp_tp},#{shfxz},#{kcdz})
+    </insert>
+
+    <update id="update_cart">
+        UPDATE t_mall_shoppingcart
+        <set>
+            <if test="tjshl>=0">
+                tjshl=#{tjshl},
+            </if>
+            <if test="hj>=0">
+                hj=#{hj},
+            </if>
+            shfxz=#{shfxz}
+        </set>
+        WHERE id=#{yh_id}
+    </update>
+
+    <delete id="delete_cart_by_id">
+        DELETE
+        FROM t_mall_shoppingcart
+        WHERE Id=#{cart_id}
+    </delete>
+    <delete id="delete_cart_by_sku_id">
+        DELETE
+        FROM t_mall_shoppingcart
+        WHERE sku_id=#{sku_id}
+    </delete>
+
+
+</mapper>

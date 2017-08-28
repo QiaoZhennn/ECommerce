@@ -1,0 +1,13 @@
+package com.atguigu.service;
+
+import com.atguigu.bean.OBJECT_T_MALL_ATTR;
+import com.atguigu.bean.T_MALL_CLASS_1;
+
+import java.util.List;
+
+public interface AttrService {
+    List<OBJECT_T_MALL_ATTR> select_attr_by_class_2(int class_2_id);
+    List<T_MALL_CLASS_1> select_class_1();
+
+    void save_attr(List<OBJECT_T_MALL_ATTR> list_attr, int class_2_id);
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jdbc
+       http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--包扫描-->
+    <context:component-scan base-package="com.atguigu.*">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+    </context:component-scan>
+
+
+    <context:property-placeholder location="classpath:dbConfig.properties,classpath:wsInf.properties"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapper/mapper-*.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="userService" class="com.atguigu.util.MyInterfaceFactoryBean">
+        <property name="wsInterface" value="com.atguigu.service.UserService"/>
+        <!--从properties中读取wsdl的url值-->
+        <property name="url" value="${userService}"/>
+    </bean>
+    <bean id="addressService" class="com.atguigu.util.MyInterfaceFactoryBean">
+        <property name="wsInterface" value="com.atguigu.service.AddressService"/>
+        <property name="url" value="${addressService}"/>
+    </bean>
+
+    <!--扫描Mapper接口，由此，Mapper接口不必加注解-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.atguigu.mapper"/>
+    </bean>
+
+    <!--事务管理-->
+    <!--DataSourceTransactionManager(事务大管家)和SqlSessionFactoryFactory都引用了DataSource，但是这个DataSourceTransactionManager
+        对原来的SqlSessionFactoryFactory做了一个动态代理。所以，此类之间接触数据库，
+        SqlSessionFactoryFactory接触的是此类提供的数据库。
+    -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.atguigu.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+</beans>

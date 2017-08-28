@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jdbc 
+       http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://cxf.apache.org/jaxws
+       http://cxf.apache.org/schemas/jaxws.xsd
+       http://cxf.apache.org/jaxrs
+       http://cxf.apache.org/schemas/jaxrs.xsd
+       ">
+
+    <!--标配，从jar包中导入cxf配置文件-->
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <!--soap风格-->
+    <jaxws:endpoint implementorClass="com.atguigu.service.UserService" address="/user">
+        <jaxws:implementor>
+            <bean class="com.atguigu.service.UserServiceImpl"/>
+        </jaxws:implementor>
+        <jaxws:inInterceptors>
+            <ref bean="wSS4JInInterceptor"/>
+        </jaxws:inInterceptors>
+    </jaxws:endpoint>
+    <jaxws:endpoint implementorClass="com.atguigu.service.AddressService" address="/address">
+        <jaxws:implementor>
+            <bean class="com.atguigu.service.AddressServiceImpl"/>
+        </jaxws:implementor>
+    </jaxws:endpoint>
+    <bean id="wSS4JInInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+        <constructor-arg>
+            <map>
+                <!--拦截器的校验方式-->
+                <entry key="action" value="UsernameToken"/>
+                <!--配置密码类型-->
+                <entry key="passwordType" value="PasswordText"/>
+                <!--配置一个回调函数-->
+                <entry key="passwordCallbackRef" value-ref="myPasswordCallbackService"/>
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean id="myPasswordCallbackService" class="com.atguigu.util.MyPasswordCallbackService"/>
+    <!--rest风格-->
+    <jaxrs:server address="/ruser">
+        <jaxrs:serviceBeans>
+            <!--REST风格，不需要把接口给客户端才能调用，直接可以通过http请求调用。-->
+            <bean class="com.atguigu.service.UserServiceImpl"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
+
+    <!--配置多数据源切换，MyDataSourceRouting是一个自定义的AbstractRoutingDataSource的实现类-->
+    <context:property-placeholder location="classpath:dbConfig.properties"/>
+    <bean id="dataSource" class="com.atguigu.util.MyDataSourceRouting">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="1" value-ref="dataSource1"/>
+                <entry key="2" value-ref="dataSource2"/>
+            </map>
+        </property>
+        <!--涉及多数据源切换，需要设置默认数据源，防止出现未指定数据源的情况-->
+        <property name="defaultTargetDataSource" ref="dataSource1"/>
+    </bean>
+    <bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url1}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <bean id="dataSource2" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url2}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+
+
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapper/mapper-*.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.atguigu.mapper"/>
+    </bean>
+
+    <!--读配置文件wsInf.proerties-->
+<!--    <bean class="com.atguigu.util.MyInterfaceFactoryBean">
+        <property name="url" value=""/>
+        <property name="t" value=""/>
+    </bean>-->
+
+</beans>
