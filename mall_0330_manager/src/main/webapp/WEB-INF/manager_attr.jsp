@@ -54,7 +54,7 @@
                         });
 
                         $('#attr_list_inner').datagrid({
-                            url:'get_attr_by_class_2_json.do', //向服务器发请求，服务器须返回一个json对象。
+                            url:'get_attr_by_class_2_json.do', //向服务器发请求，服务器须返回一个集合对象，它自动被转为json。
                             queryParams:{class_2_id:class_2_id}, //向请求传递的参数
                             //field:显示何属性的值，title：列名。
                             columns:[[

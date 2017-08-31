@@ -23,8 +23,10 @@
     <div class="logo"><img src="/images/logo.jpg" alt=""></div>
     <div class="search_on">
         <div class="se">
-            <input type="text" name="search" class="lf">
-            <input type="submit" class="clik" value="搜索">
+            <form id="keywords_id" action="/search_keywords.do" method="post">
+            <input type="text" name="keywords" class="lf">
+            <input type="button" class="clik" onclick="keywords_submit()" value="搜索">
+            </form>
         </div>
         <div class="se">
             <%--            <a href="">取暖神奇</a>
@@ -101,6 +103,10 @@
                 $("#index_class_2_" + class_1_id).append("<a  href='/class_2_sku_search.htm?class_2_id=" + json.id + "&class_2_name=" + str + "'>" + json.flmch2 + "</a>");
             });
         });
+    }
+
+    function keywords_submit() {
+        $("#keywords_id").submit();
     }
 
 </script>

@@ -17,7 +17,7 @@
 <body class="easyui-layout">
 
 
-    <div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">north region</div>
+    <div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;"><h2>电商网站后台管理系统</h2></div>
     <div data-options="region:'west',split:true,title:'West'" style="width:150px;padding:10px;">
         <ul class="easyui-tree">
             <li>
@@ -39,15 +39,15 @@
             <li>
                 <span>缓存管理</span>
                 <ul>
-                    <li>检查缓存</li>
+                    <li><a href="javascript:index_add_tabs('goto_redis.htm','商品缓存')">商品缓存</a></li>
                     <li>用户缓存</li>
                 </ul>
             </li>
         </ul>
 
     </div>
-    <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
-    <div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>
+    <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">其他信息</div>
+    <div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">@Copyright</div>
     <div data-options="region:'center',title:'Center',iconCls:'icon-ok'">
         <div id="index_tt" class="easyui-tabs">
 

@@ -2,6 +2,7 @@ package com.atguigu.controller;
 
 import com.atguigu.bean.*;
 import com.atguigu.service.AttrService;
+import com.atguigu.service.ManagerSearchService;
 import com.atguigu.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ECommerce.iml" filepath="$PROJECT_DIR$/ECommerce.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mall_0330_keywords/mall_0330_keywords.iml" filepath="$PROJECT_DIR$/mall_0330_keywords/mall_0330_keywords.iml" />
       <module fileurl="file://$PROJECT_DIR$/mall_0330_manager/mall_0330_manager.iml" filepath="$PROJECT_DIR$/mall_0330_manager/mall_0330_manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/mall_0330_sale/mall_0330_sale.iml" filepath="$PROJECT_DIR$/mall_0330_sale/mall_0330_sale.iml" />
       <module fileurl="file://$PROJECT_DIR$/mall_0330_user/mall_0330_user.iml" filepath="$PROJECT_DIR$/mall_0330_user/mall_0330_user.iml" />

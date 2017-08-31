@@ -62,4 +62,9 @@ public class SearchServiceImpl implements SearchService {
         List<OBJECT_T_MALL_SKU> skus = searchMapper.select_sku_by_attr(map);
         return skus;
     }
+
+    @Override
+    public List<Integer> select_value_by_attr_id(int attr_id) {
+        return attrMapper.select_value_by_attr_id(attr_id);
+    }
 }

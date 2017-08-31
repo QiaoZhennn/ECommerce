@@ -41,6 +41,12 @@
         T_MALL_CLASS_1
     </select>
 
+    <select id="select_value_by_attr_id" resultType="int">
+        SELECT Id
+            FROM t_mall_value
+        WHERE shxm_id=#{attr_id}
+    </select>
+
     <insert id="insert_attr" useGeneratedKeys="true" keyColumn="id" keyProperty="attr_obj.id">
         INSERT INTO
         t_mall_attr(shxm_mch, flbh2)

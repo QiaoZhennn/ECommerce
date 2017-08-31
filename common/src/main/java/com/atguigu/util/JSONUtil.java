@@ -23,7 +23,8 @@ public class JSONUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return JSON.parseObject(json,clazz);
+        T object = JSON.parseObject(json, clazz);
+        return object;
     }
     public static <T> String List2Json(List<T> list){
         String s = JSON.toJSONString(list);

@@ -17,7 +17,10 @@
 <h2>检索列表</h2>
 <hr>
 ${class_2_name}的检索列表<br>
+<form action="get_sku_by_attr.do" id="test_form" method="post">
+    <input type="hidden" value="${class_2_id}" name="class_2_id">
 <div id="search_attr_show"></div>
+</form>
 <br>
 <input type="text" id="search_order_show"><br><br>
 <div id="attr_area" style="width: 700px">
@@ -51,8 +54,8 @@ ${class_2_name}的检索列表<br>
     function search_attr_up(shxm_id, shxzh_id, shxm_mch) {
         $("#search_attr_show").append('<div id="search_attr_show_id' + shxm_id + '">' +
             '<a shxm_id=' + shxm_id + ' shxzh_id=' + shxzh_id + '  href="javascript:search_attr_down(' + shxm_id + ')">' + shxm_mch + '</a>' +
-            '<input type="text" value="' + shxm_id + '_' + shxzh_id + '" name="search_attr_id_arry">' +
-            //                '<input type="text" value="{\"shxm_id\":'+shxm_id+',\"shxzh_id\"'+shxzh_id+'}" name="search_attr_id_arry">'+ JSON格式
+//            '<input type="text" value="' + shxm_id + '_' + shxzh_id + '" name="search_attr_id_arry">' +
+            "<input type='text' value='{\"shxm_id\":"+shxm_id+",\"shxzh_id\":"+shxzh_id+"}' name='search_attr_id_arry'>"+
             '</div>');
         $("#search_attr_" + shxm_id).hide();
         search_get_sku_by_attr();
@@ -66,21 +69,24 @@ ${class_2_name}的检索列表<br>
 
     function search_get_sku_by_attr() {
         var list_av = $("input[name='search_attr_id_arry']");
-        //数组方式
-        var list_av_array = new Array();
+        //json方式
+        var list_av_str="";
         $(list_av).each(function (i, jsonObj) {
-            list_av_array[i] = jsonObj.value;
+            var json_str=jsonObj.value; //该json字符串的属性名必须用双引号括住，例如{"id":1}，不能是单引号。
+            var json_obj=$.parseJSON(json_str);
+            list_av_str+="list_av["+i+"].shxm_id="+json_obj.shxm_id+"&list_av["+i+"].shxzh_id="+json_obj.shxzh_id+"&";
         });
-        /*$(list_av).each(function (i, jsonObj) {
-            var json_obj=$.parseJSON(jsonObj.value);
-
-        });*/
-        var class_2_id = "${class_2_id}";
         var order = $("#search_order_show").val();
-        $.post("get_sku_by_attr.do", {class_2_id: class_2_id, list_av: list_av_array, order: order}, function (data) {
-            $("#search_result").html(data);
-        });
 
+        list_av_str+="class_2_id=${class_2_id}&";
+        list_av_str+="order="+order;
+        $.ajax({
+            url:"get_sku_by_attr.do",
+            data:list_av_str,
+            success:function (data) {
+                $("#search_result").html(data);
+            }
+        });
     }
 
 

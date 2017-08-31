@@ -13,4 +13,6 @@ public interface AttrMapper {
 
     void insert_attr(HashMap<String,Object> map);
     void insert_values(HashMap<String,Object> map);
+
+    List<Integer> select_value_by_attr_id(int attr_id);
 }
