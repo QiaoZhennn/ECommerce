@@ -1,6 +1,7 @@
 package com.atguigu.bean;
 
 public class OBJECT_T_MALL_SKU_MANAGER extends T_MALL_SKU {
+    private String shp_tp;
     private T_MALL_PRODUCT spu;
     private T_MALL_TRADE_MARK tm;
 
@@ -20,4 +21,11 @@ public class OBJECT_T_MALL_SKU_MANAGER extends T_MALL_SKU {
         this.tm = tm;
     }
 
+    public String getShp_tp() {
+        return shp_tp;
+    }
+
+    public void setShp_tp(String shp_tp) {
+        this.shp_tp = shp_tp;
+    }
 }

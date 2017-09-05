@@ -11,11 +11,11 @@
     <title>Title</title>
 </head>
 <body>
-<h4>你搜索的关键字是：</h4>
+<h4>你搜索的关键字是：${keywords}</h4>
 <c:forEach items="${list_sku}" var="sku">
     <div style="border: grey 1px solid;width: 200px;height: 300px;float: left;margin-left: 20px;margin-top: 20px;position: relative">
         <div onclick="goto_detail_page(${sku.id})" style="cursor: pointer;">
-            <img src="/upload/image/spu_imgs/${sku.spu.shp_tp}" width="180px" style="margin-left: 10px;margin-top: 10px"/><br>
+            <img src="/upload/image/spu_imgs/${sku.shp_tp}" width="180px" style="margin-left: 10px;margin-top: 10px"/><br>
             商品名称: ${sku.sku_mch}
             价格: ${sku.jg}<br>
         </div>

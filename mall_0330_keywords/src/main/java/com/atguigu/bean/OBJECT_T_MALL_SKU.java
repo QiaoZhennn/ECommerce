@@ -1,24 +1,18 @@
 package com.atguigu.bean;
 
+import org.apache.solr.client.solrj.beans.Field;
+
 public class OBJECT_T_MALL_SKU extends T_MALL_SKU_SOLR {
-    private T_MALL_PRODUCT spu;
-    private T_MALL_TRADE_MARK tm;
 
 
-    public T_MALL_PRODUCT getSpu() {
-        return spu;
+    @Field("shp_tp")
+    private String shp_tp;
+
+    public String getShp_tp() {
+        return shp_tp;
     }
 
-    public void setSpu(T_MALL_PRODUCT spu) {
-        this.spu = spu;
+    public void setShp_tp(String shp_tp) {
+        this.shp_tp = shp_tp;
     }
-
-    public T_MALL_TRADE_MARK getTm() {
-        return tm;
-    }
-
-    public void setTm(T_MALL_TRADE_MARK tm) {
-        this.tm = tm;
-    }
-
 }

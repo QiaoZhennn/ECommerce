@@ -6,16 +6,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+/**
+ * 模拟发送一个Http的GET请求，这样mall_keywords模块的SearchKeywordsController会收到该RESTful请求。
+ */
 public class MyHttpGetUtil {
-
 	public static String doGet(String url) throws Exception {
-
 		// 创建Httpclient对象
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-
 		// 创建http GET请求
 		HttpGet httpGet = new HttpGet(url);
-
 		CloseableHttpResponse response = null;
 		try {
 			// 执行请求
@@ -32,5 +31,4 @@ public class MyHttpGetUtil {
 		}
 		return null;
 	}
-
 }

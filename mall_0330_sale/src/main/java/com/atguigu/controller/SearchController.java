@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
@@ -23,17 +22,21 @@ public class SearchController {
 
     @RequestMapping("/search_keywords")
     public String search_keywords(String keywords,ModelMap map){
-        keywords.replaceAll(" ",""); //把搜索关键字的空格替换成空串，如果不替换，空格也会成为搜索关键字的一部分。
+        keywords = keywords.replaceAll(" ", "");//把搜索关键字的空格替换成空串，如果不替换，空格也会成为搜索关键字的一部分。
+        map.put("keywords",keywords);
+        String encode = StringUtil.encode(keywords);
+        keywords=encode.replaceAll("%","_");
         List<OBJECT_T_MALL_SKU> list_sku=new ArrayList<>();
         //访问关键字检索服务，输入关键字。
         try {
-            String doGet=MyHttpGetUtil.doGet(MyProperty.getMyProperty("solrServer.properties","url")+keywords);
+//            keywords=StringUtil.encode(keywords);
+            String url = MyProperty.getMyProperty("solrServer.properties", "search_keywords") + keywords + ".do";
+            String doGet=MyHttpGetUtil.doGet(url); //模拟浏览器发送一个GET请求给solr服务。将GET请求的返回值封装成json返回。
             list_sku=JSONUtil.Json2List(doGet,OBJECT_T_MALL_SKU.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        map.put("keywords",keywords);
-        map.put("list_sku","");
+        map.put("list_sku",list_sku);
         return "sale_keywords";
     }
 

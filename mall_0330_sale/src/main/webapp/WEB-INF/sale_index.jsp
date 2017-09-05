@@ -25,7 +25,7 @@
         <div class="se">
             <form id="keywords_id" action="/search_keywords.do" method="post">
             <input type="text" name="keywords" class="lf">
-            <input type="button" class="clik" onclick="keywords_submit()" value="搜索">
+            <input type="button" class="clik" style="cursor: pointer" onclick="keywords_submit()" value="搜索">
             </form>
         </div>
         <div class="se">
