@@ -20,7 +20,9 @@
 
 </div>
 <div class="search">
-    <div class="logo"><img src="/images/logo.jpg" alt=""></div>
+    <div class="logo">
+        <img src="/images/logo.jpg" alt="Brand here">
+    </div>
     <div class="search_on">
         <div class="se">
             <form id="keywords_id" action="/search_keywords.do" method="post">

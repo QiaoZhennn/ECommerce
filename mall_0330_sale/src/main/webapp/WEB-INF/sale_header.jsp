@@ -38,7 +38,7 @@
 
     //浏览器端处理cookie
     $(function () {
-        var loginUser=get_cookie_value("yh_mch");
+        var loginUser=get_cookie_value(" yh_mch");
         $("#user_name").text(loginUser);
     });
     function get_cookie_value(key) {

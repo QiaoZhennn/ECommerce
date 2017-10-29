@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="up">
-    <img src="/images/logo.jpg" height="45px;" class="hy_img"/>
+    <%--<img src="/images/logo(2).jpg" height="45px;" class="hy_img"/>--%>
     <div class="hy">
         欢迎登录
     </div>
@@ -25,7 +25,7 @@
     </div>
     <div class="login">
         <div class="l1 ">
-            <div class="l1_font_01 ">硅谷会员</div>
+            <div class="l1_font_01 ">会员</div>
             <a class="l1_font_02 " href="<%=application.getContextPath() %>/to_regist.do">用户注册</a>
         </div>
         <div class="blank_01"></div>
@@ -46,12 +46,8 @@
             <div class="blank_01"></div>
             <div class="blank_01"></div>
             <div class="box_01">
-                <input type="checkbox" class="box_01_box"/>
                 <div class="box_01_both">
-                    <div class="box_01_both_1">
-                        系统用户<input type="radio" name="user_type" value="1">
-                        测试用户<input type="radio" name="user_type" value="2">
-                    </div>
+
                     <div class="box_01_both_2">忘记密码？</div>
                 </div>
             </div>
@@ -67,18 +63,15 @@
         <div class="blank_01"></div>
         <div class="blank_01"></div>
         <div class="box_down">
-            <div class="box_down_1">使用合作网站账号登录京东：</div>
-            <div class="box_down_1">京东钱包&nbsp;&nbsp;|&nbsp;&nbsp;QQ
-                &nbsp;&nbsp;|&nbsp;&nbsp;微信
-            </div>
+
         </div>
     </div>
 </div>
 
-<div class="down">
+<%--<div class="down">
     <br />
-    Copyright©2004-2015  xu.jb.com 版权所有
-</div>
+    Copyright©2004-2017 版权所有
+</div>--%>
 </body>
 <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
